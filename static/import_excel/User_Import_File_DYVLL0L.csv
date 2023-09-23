@@ -1,0 +1,8 @@
+S.No,First Name,Last Name,Personal Number,Designation,Email,password,Department,Unit,User role ,AD User(True|False)
+1,sam01,sul01,samsul01,officer01,sam01@gmail.com,lifo@123,TRAILOFFICER,Ship,Initiator,False
+2,sam02,sul02,samsul02,officer02,sam02@gmail.com,lifo@123,TRAILOFFICER,Ship,Recommender,False
+3,sam03,sul03,samsul03,officer03,sam03@gmail.com,lifo@123,TRAILOFFICER,Ship,Approver,False
+4,sam04,sul04,samsul04,officer04,sam04@gmail.com,lifo@123,TRAILOFFICER,Trials Unit,Initiator,False
+5,sam05,sul05,samsul05,officer05,sam05@gmail.com,lifo@123,TRAILOFFICER,Trials Unit,Recommender,False
+6,sam06,sul06,samsul06,officer06,sam06@gmail.com,lifo@123,TRAILOFFICER,Trials Unit,Approver,False
+7,sam07,sul07,samsul07,officer07,sam07@gmail.com,lifo@123,TRAILOFFICER,INSMA,INSMA,False

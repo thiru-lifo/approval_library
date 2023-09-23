@@ -1,0 +1,3 @@
+S.No,First Name,Last Name,Personal Number,Designation,Email,password,Department,Unit,User role ,AD User(True|False)
+1,sam0111,sul0111,samsul0111,officer0111,sam0111@gmail.com,lifo@123,TRAILOFFICER,Ship,Initiator,FALSE
+2,sam0112,sul0112,samsul0112,officer0112,sam0112@gmail.com,,TRAILOFFICER,Ship,Initiator,FALSE

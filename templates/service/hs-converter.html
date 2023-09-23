@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>ETMA Navy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="pdfkit-page-size" content="Legal"/>
+    <meta name="pdfkit-orientation" content="Landscape"/>
+    <style type="text/css">
+      body{margin:50px 50px; size:landscape;}
+    .wrapper{width: 100%; margin: 20px auto;}
+    table{border-collapse: collapse;}
+    .clear{padding: 0; margin: 0; width: 100%; clear: both;}
+    .star{color: red;}
+    body{margin:50px;background: #FFF !important;}
+    </style>       
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="heading-style2">
+            <h2 style="font-size: 20px; font-weight: 600; color: #000; text-align: center;"><strong>HELO STARTING CONVERTOR TRIALS  OCCASION OF TRIALS <span></span>
+            TRIALS DATE - <span style="border-bottom: 1px solid #000;">{{users.trial_date |date:'F jS Y'}} </span></strong></h2>
+            <h2 style="font-size: 18px; line-height: 30px; font-weight: 600; color: #000; text-align: center;"><strong>HELO STARTING FREQUENCY CONVERTOR LOAD TRIAL REPORT – CONVERTOR NO <span style="border-bottom: 1px solid #000;">{{users.trial_conv_no}}</span> <br/>
+            TRIALS DATE - <span> (200V, 400HZ, 3 PH, 30/ 75 KVA) SHIP – INS </span>
+            </strong></h2>
+          </div>
+          <h4 style="font-size:18px ;color: #000; margin: 20px 0 10px;">1. Trial Details</h4>
+      <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif;">
+       
+        <tr>
+                <td>(a)</td>
+                <td width="40%">Occasion of current trial * <span class="star"><span class="star"></span></span></td>
+                <td style="font-size:14px; color: #222;">test</td>
+              </tr>
+           
+              <tr>
+                <td>(b)</td>
+                <td>Date of last trial carried out on * <span class="star"><span class="star"></span></span></td>
+                <td style="font-size:14px; color: #222;">{{users.trial_date |date:'d/m/Y'}}</td>
+              </tr>              
+              <tr>
+                <td>(c)</td>
+                <td>Proposal reference * <span class="star"><span class="star"></span></span></td>
+                <td style="font-size:14px; color: #222;">{{users.occation_of_trial}}</td>
+              </tr>             
+              <tr>
+                <td>(d)</td>
+                <td>File reference * <span class="star"><span class="star"></span></span></td>
+                <td style="font-size:14px; color: #222;">{{users.lastTrialDate |date:'d/m/Y'}}</td>
+              </tr>       
+              <tr>
+                <td>(e)</td>
+                <td>Reference document for trial <span class="star"><span class="star"></span></span></td>
+                <td style="font-size:14px; color: #222;">{{users.referanceTrialID}}</td>
+              </tr>
+          </table>
+             
+      <h4 style="font-size:18px ;color: #000; margin: 20px 0 10px;">2. Test Equipment Used. <span class="star"><span class="star"></span></span></h4>
+      <h4>3. Equipment Details</h4>
+      <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif;padding: 10px 5px;">
+                  <tr>
+                    <th colspan="3">Motor</th>
+                  </tr>
+                  
+                  <tr>
+                    <td>(a)</td>
+                    <td>Make and rating ** <span class="star"><span class="star"></span><span class="star"></span></span></td>
+                    <td width="50%" style="font-size:14px; color: #222;">{{users.motr_equipmentID}}</td>
+                  </tr>                                 
+                  <tr>
+                    <td>(b)</td>
+                    <td>Serial no **<span class="star"><span class="star"></span><span class="star"></span></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.motr_equipmentSrNo}}</td>
+                  </tr>                 
+                  <tr>
+                    <td>(c)</td>
+                    <td>RPM **<span class="star"><span class="star"></span><span class="star"></span></span> </td>
+                    <td style="font-size:14px; color: #222;">{{users.motr_rpm_val}}</td>
+                  </tr>                 
+                  <tr>
+                    <td>(d)</td>
+                    <td>Bearing details **<span class="star"><span class="star"></span><span class="star"></span></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.motr_bearingNo}}</td>
+                  </tr>                
+                  <tr>
+                    <td>(e)</td>
+                    <td>Input supply **<span class="star"><span class="star"></span><span class="star"></span></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.motr_inpSupply}}</td>
+                  </tr>
+                 
+                </table>
+
+                <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif; margin-top: 10px;">
+                  <tr>
+                    <th colspan="3">Alternator</th>
+                  </tr>
+                  <tr>
+                    <td>(a)</td>
+                    <td>Make and rating **<span class="star"><span class="star"></span><span class="star"></span></span></td>
+                    <td width="50%" style="font-size:14px; color: #222;">{{users.altnr_equipmentID}}</td>
+                  </tr>
+                  <tr>
+                    <td>(b)</td>
+                    <td>Model & serial no.**<span class="star"><span class="star"></span><span class="star"></span></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.altnr_equipmentSrNo}}</td>
+                  </tr>                  
+                  <tr>
+                    <td>(c)</td>
+                    <td>Rated voltage **<span class="star"><span class="star"></span><span class="star"></span></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.altnr_RatedVoltage}}</td>
+                  </tr>              
+                  <tr>
+                    <td>(d)</td>
+                    <td>Rated frequency **<span class="star"><span class="star"></span><span class="star"></span></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.altnr_RatedFrequency}}</td>
+                  </tr>          
+                  <tr>
+                    <td>(e)</td>
+                    <td>Rated kVA/ kW **<span class="star"><span class="star"></span><span class="star"></span></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.altnr_RatedVal}}</td>
+                  </tr>                
+                  <tr>
+                    <td>(f)</td>
+                    <td>Rated current **<span class="star"><span class="star"></span><span class="star"></span></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.altnr_RatedCurrentVal}}</td>
+                  </tr>                
+                  <tr>
+                    <td>(g)</td>
+                    <td>Bearing number **<span class="star"><span class="star"></span><span class="star"></span></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.altnr_BearingNo}}</td>
+                  </tr>
+               
+                </table>
+
+                <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif; margin-top: 10px;">
+                  <tr>
+                    <th colspan="3">AVR</th>
+                  </tr>
+                  <tr>
+                    <td>(a)</td>
+                    <td>Make and type **<span class="star"><span class="star"></span><span class="star"></span></span></td>
+                    <td width="50%" style="font-size:14px; color: #222;">{{users.avr_equipmentID}}</td>
+                  </tr>                 
+                  <tr>
+                    <td>(b)</td>
+                    <td>Serial no. **<span class="star"><span class="star"></span><span class="star"></span></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.avr_equipmentSrNo}}</td>
+                  </tr>
+                </table>
+
+                <h4>4.  Insulation Resistance of MG Set (iaw NES 502(Issue 4)).</h4>
+                <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif;">                
+                  <tr>
+                    <td>(a)</td>
+                    <td>Alternator (>1MW) **<span class="star"></span>  </td>
+                    <td width="50%" style="font-size:14px; color: #222;">{{users.ir_alternator}}</td>
+                  </tr>                  
+                  <tr>
+                    <td>(b)</td>
+                    <td>Motor (>1MW)) **<span class="star"></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.ir_motor}}</td>
+                  </tr>                
+                </table>
+
+                <h4>5.  Protection Checks.</h4>
+                <div class="table-responsive">
+                <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif; text-align: left;">
+                  <tr>
+                    <th>Ser</th>
+                    <th>Protection</th>
+                    <th>Calibration Date<span class="star"></span></th>
+                    <th>Calibration Certificate Provided (Yes/No)<span class="star"></span></th>
+                    <th>Tripping Value</th>
+                    <th>Observed Value<span class="star"></span></th>
+                    <th>Status (Sat/ Unsat)<span class="star"></span></th>
+                    <th>Remarks<span class="star"></span></th>
+                  
+                  </tr>
+                  <tr>
+                    <td>(a)</td>
+                    <td>Over voltage protection **</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OVP_CDate|date:'d/m/Y'}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OVP_CertSts}}</td>
+                    <td>With a time delay of 2 Sec when terminal voltage exceeds 110% of rated voltage</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OVP_ObsVal}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OVP_Sts}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OVP_Remarks}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td style="font-size:14px; color: #222;">test</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OVP_CDate |date:'d/m/Y'}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OVP_CertSts}}</td>
+                    <td>With a time delay of 2 Sec when terminal voltage exceeds 110% of rated voltage</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OVP_ObsVal}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OVP_Sts}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OVP_Remarks}}</td>
+                  </tr>
+                  <tr>
+                    <td>(b)</td>
+                    <td>Over load protection **</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OLP_CDate |date:'d/m/Y'}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OLP_CertSts }}</td>
+                    <td>125% of full load current</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OLP_ObsVal }}</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OLP_Sts }}</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_OLP_Remarks }}</td>
+                  </tr> 
+                  <tr>
+                    <td>(c)</td>
+                    <td>Single phase protection **</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_SPP_CDate |date:'d/m/Y'}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_SPP_CertSts }}</td>
+                    <td>NA</td>
+                    <td>NA</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_SPP_Sts }}</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_SPP_Remarks }}</td>
+                  </tr>
+                
+                  <tr>
+                    <td>(d)</td>
+                    <td>Winding temperature protection **</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_WTP_CDate |date:'d/m/Y'}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_WTP_CertSts}}</td>
+                    <td>NA</td>
+                    <td>NA</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_WTP_Sts}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.proChck_WTP_Remarks }}</td>
+                  </tr>
+                 
+                </table>
+                <h4>6. Instrumentation</h4>
+                <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif; text-align: left;">
+                  <tr>
+                    <th>Ser</th>
+                    <th>Meter</th>
+                    <th>Ops/ Non Ops<span class="star"></span></th>
+                    <th>Calibration Date<span class="star"></span></th>
+                    <th>Calibration Certificate Provided (Yes/ No)<span class="star"></span></th>
+                    <th>Status (Sat/ Unsat)<span class="star"></span></th>
+                    <th>Remarks<span class="star"></span></th>
+                  </tr>
+                  <tr>
+                    {% if users %}
+                    <td>(a)</td>
+                    <td>Voltmeter</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_VM_ops}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_VM_CDate |date:'d/m/Y'}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_VM_CertSts}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_VM_Sts}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_VM_Remarks}}</td>
+                    {% endif %}
+                  </tr>
+                  <tr>
+                    <td>(b)</td>
+                    <td>Frequency meter</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_FM_ops}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_FM_CDate |date:'d/m/Y'}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_FM_CertSts}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_FM_Sts}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_FM_Remarks}}</td>
+                  </tr>
+                  <tr>
+                    <td>(c)</td>
+                    <td>Ammeter</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_AMM_ops}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_AMM_CDate |date:'d/m/Y'}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_AMM_CertSts}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_AMM_Sts}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.instrmtn_AMM_Remarks}}</td>
+                  </tr>
+                  
+                </table>
+                <h4>7. Motor Health Checks.</h4>
+                <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif; text-align: left;">
+                  <tr>
+                    <td width="7%">(a)</td>
+                    <td width="40%">SPM<span class="star"></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.motrHlthCh_SPM}}</td>
+                  </tr>
+                  <tr>
+                    <td>(b)</td>
+                    <td>Starting current<span class="star"></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.motrHlthCh_StrtCurnt}}</td>
+                  </tr>
+                  <tr>
+                    <td>(c)</td>
+                    <td>Running current<span class="star"></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.motrHlthCh_RunCurnt}}</td>
+                  </tr>
+                  <tr>
+                    <td>(d)</td>
+                    <td>Phase balance<span class="star"></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.motrHlthCh_PhseBal}}</td>
+                  </tr>
+                </table>
+                <h4>8. Alternator Health Checks.</h4>
+                <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif; text-align: left;">
+                  <tr>
+                    <td width="7%">(a)</td>
+                    <td width="40%">SPM</td>
+                    <td style="font-size:14px; color: #222;">{{users.altnrHlthCh_SPM}}</td>
+                  </tr>
+                  <tr>
+                    <td>(b)</td>
+                    <td>Resistance of windings (should be approximately same for all the windings)<span class="star"><span class="star"></span><span class="star"></span></span><span class="star"></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.altnrHlthCh_RstnsOfWind}}</td>
+                  </tr>
+                  <tr>
+                    <td>(c)</td>
+                    <td>Inductance of windings (should be approximately same for all the windings)<span class="star"><span class="star"></span><span class="star"></span></span><span class="star"></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.altnrHlthCh_InductncOfWind}}</td>
+                  </tr>
+                </table>
+                <h4>9. Miscellaneous</h4>
+                <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif; text-align: left;">
+                  <tr>
+                    <th colspan="3"></th>
+                    <th>Remarks</th>
+                  </tr>
+                  <tr>
+                    <td width="7%">(a)</td>
+                    <td width="50%">Past history of the equipment, if any **<span class="star"><span class="star"></span><span class="star"></span></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_past_Eqpt_hst}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_past_Eqpt_hst_remarks}}</td>
+                  </tr>
+                  <tr>
+                    <td>(b)</td>
+                    <td>Lighting and ventilation of compartment (Sat/ Unsat) **<span class="star"></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_lighting}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_lighting_remarks}}</td>
+                  </tr>
+                  <tr>
+                    <td>(c)</td>
+                    <td>Cooling (Natural air/ Forced Cooling) **<span class="star"></span>  </td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_cooling}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_cooling_remarks}}</td>
+                  </tr>
+                  <tr>
+                    <td>(d)</td>
+                    <td>Earthing of MG set and control panel (Sat/ Unsat) **<span class="star"></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_earthing}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_earthing_remarks}}</td>
+                  </tr>
+                  <tr>
+                    <td>(e)</td>
+                    <td>Condition of cables (Sat/Unsat) **<span class="star"></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_cbl_cond}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_cbl_cond_remarks}}</td>
+                  </tr>
+                  <tr>
+                    <td>(f)</td>
+                    <td>Cleanliness (Sat/ Unsat) **<span class="star"></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_cleanliness}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_cleanliness_remarks}}</td>
+                  </tr>
+                  <tr>
+                    <td>(g)</td>
+                    <td>Indication lamps and switches (Sat/ Unsat) **<span class="star"></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_indication}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_indication_remarks}}</td>
+                  </tr>
+                  <tr>
+                    <td>(h)</td>
+                    <td>Equipment tallies **<span class="star"></span></td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_Eqpt}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.misc_Eqpt_remarks}}</td>
+                  </tr>
+                </table>
+                <div class="note-card">
+                  <p><strong>Note:</strong>   For Para 1 to 9, following to be followed while filling the details mentioned in sub serials:-</p>
+                  <ul type="i">
+                    <li>“<span class="star"></span>”     -   To be checked/ filled/ measured by ETMA trial member.</li>
+                    <li>“<span class="star"><span class="star"></span><span class="star"></span></span>”    -   To be provided by SS.</li>
+                    <li>“<span class="star"><span class="star"></span><span class="star"></span></span><span class="star"></span>”   -   To be checked/ provided by Yard. </li>
+                  </ul>
+                </div>      
+                <h4>10. Voltage Regulation.</h4>
+                <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif; text-align: left;">
+                  <tr>
+                      <th rowspan="2">Load</th>
+                      <th colspan="2">Observed from AVR</th>
+                      <th colspan="2">Observed from HVR</th>
+                      <th rowspan="2">Permissible (+-5% of Rated Voltage)190 to 210V</th>
+                      <th rowspan="2">Remarks</th>
+                    </tr>
+                    <tr>
+                      <th>Min.</th>
+                      <th>Max.</th>
+                      <th>Min.</th>
+                      <th>Max.</th>
+                    </tr>
+                   
+                    <tr>
+                      <td>No load</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltRegln_Nlod_AVR_min}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltRegln_Nlod_AVR_max}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltRegln_Nlod_HVR_min}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltRegln_Nlod_HVR_max}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltRegln_Nlod_permsble_volt}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltRegln_Nlod_remarks}}</td>
+                    </tr>
+                   
+                    <tr>
+                      <td>Full load</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltRegln_Flod_AVR_min}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltRegln_Flod_AVR_max}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltRegln_Flod_HVR_min}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltRegln_Flod_HVR_max}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltRegln_Flod_permsble_volt}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltRegln_Flod_remarks}}</td>
+                    </tr>
+                  
+                </table>
+                <h4>11.Voltage Balance Test.</h4>
+                <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif; text-align: left;">
+                  <tr>
+                      <th rowspan="2">Load</th>
+                      <th colspan="3">Voltage Observed</th>
+                      <th rowspan="2" width="25%">Difference (Between Max & Min of Three values)</th>
+                      <th rowspan="2">Permissible Limit</th>
+                      <th rowspan="2">Remarks</th>
+                    </tr>
+                    <tr>
+                      <th>RY</th>
+                      <th>YB</th>
+                      <th>BR</th>
+                    </tr>
+                   
+                    <tr>
+                      <td>No load</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltBalTst_Nlod_VO_RY}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltBalTst_Nlod_VO_YB}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltBalTst_Nlod_VO_BR}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltBalTst_Nlod_dif_val}}</td>
+                      <td>3V RMS</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltBalTst_Nlod_remarks}}</td>
+                    </tr>
+                   
+                    <tr>
+                      <td>Full load</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltBalTst_Flod_VO_RY}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltBalTst_Flod_VO_YB}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltBalTst_Flod_VO_BR}}</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltBalTst_Flod_dif_val}}</td>
+                      <td>3V RMS</td>
+                      <td style="font-size:14px; color: #222;">{{users.voltBalTst_Flod_remarks}}</td>
+                    </tr>
+                   
+                </table>
+
+                <h4>12. Steady State Trials. </h4>
+                <p>(a)  Voltage. Nominal voltage is <strong>200 Volts.</strong></p>
+                <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif; text-align: left;">
+                  <tr>
+                    <th rowspan="2">Load %</th>
+                    <th rowspan="2">kW/kVA</th>
+                    <th colspan="2">Volts</th>
+                    <th rowspan="2">PF</th>
+                    <th rowspan="2" width="30%">Voltage Modulation (less than 2%)</th>
+                  </tr>
+                  <tr>
+                    <th>Observed</th>
+                    <th style="text-align: center;">Permitted Limits </th>
+                  </tr>
+                  
+                  <tr>
+                    <td>100</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_100_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_100_ObsVolt}}</td>
+                    <td rowspan="5" style="text-align: center;">190 to 208 V</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_100_PF}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_100_Volt_Modln}}</td>
+                  </tr>
+                 
+                  <tr>
+                    <td>75</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_75_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_75_ObsVolt}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_75_PF}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_75_Volt_Modln}}</td>
+                  </tr>
+                 
+                  <tr>
+                    <td>50</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_50_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_50_ObsVolt}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_50_PF}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_50_Volt_Modln}}</td>
+                  </tr>
+                 
+                  <tr>
+                    <td>25</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_25val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_25_ObsVolt}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_25_PF}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_25_Volt_Modln}}</td>
+                  </tr>
+                
+                  <tr>
+                    <td>0</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_0_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_0_ObsVolt}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_0_PF}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.sstv_0_Volt_Modln}}</td>
+                  </tr>
+                  
+                </table>
+                </div>
+                <div class="note-card">
+                  <p><strong>Note: </strong></p>
+                  <ul type="i">
+                    <li>The load to be gradually reduced in quarter load steps from full load to no load and when the voltage has stabilised after each load change the steady state voltage to be recorded.</li>
+                    <li>Voltage Modulation.   Voltage Modulation is the periodic voltage variation of single line to line user voltage. The periodicity of voltage modulation should be considered to be longer than 1 cycle time at nominal frequency and less than 10 seconds. Voltage used in the below mentioned equation is RMS voltage.</li>
+                  </ul>
+                  <p>
+                    Voltage Modulation(Percent) = 100 x (Vmax – Vmin)
+                    (2 x Vnominal)
+                  </p>
+                </div>
+                <p>(b)  Frequency   Nominal Frequency – <strong>400Hz</strong></p>
+                <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif; text-align: left;">
+                  <tr>
+                    <th>Load %</th>
+                    <th>kW/kVA</th>
+                    <th>Observed</th>
+                    <th>Permissible Limit</th>
+                    <th>Frequency Modulation (less than 4Hz/ 1%)</th>
+                  </tr>
+                
+                  <tr>
+                    <td>100</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_100_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_100_ObsVolt}}</td>
+                    <td rowspan="5">393 - 407Hz Constant load tolerance - + 0.5%</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_100_freq_Modln}}</td>
+                  </tr>
+               
+                  <tr>
+                    <td>75</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_75_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_75_ObsVolt}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_75_freq_Modln}}</td>
+                  </tr>
+                 
+                  <tr>
+                    <td>50</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_50_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_50_ObsVolt}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_50_freq_Modln}}</td>
+                  </tr>
+                 
+                  <tr>
+                    <td>25</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_25_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_25_ObsVolt}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_25_freq_Modln}}</td>
+                  </tr>
+                
+                  <tr>
+                    <td>0</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_0_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_0_ObsVolt}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.freq_0_freq_Modln}}</td>
+                  </tr>
+                 
+                </table>
+                <div class="note-card">
+                  <p><strong>Note:</strong> Frequency Modulation.   Frequency Modulation is the periodic variation in frequency. The periodicity of Frequency modulation should be considered to be longer than 1 cycle time at nominal frequency and less than 10 seconds. </p>
+                  <p>
+                    Frequency Modulation(Percent) = 100 x (Fmax – Fmin)
+                        (2 x Fnominal)
+                  </p>
+                </div>
+                <h4>13. Voltage Transient Response Test.</h4>
+                <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif; text-align: left;">
+                  <tr>
+                    <th colspan="2">Load %</th>
+                    <th rowspan="2">Initial Value</th>
+                    <th rowspan="2">Momentary Value</th>
+                    <th rowspan="2">Final Value</th>
+                    <th colspan="2">% Peak Variation</th>
+                    <th colspan="2">Recovery Time</th>
+                  </tr>
+                  <tr>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Observed</th>
+                    <th>Permissible Limit</th>
+                    <th>Observed</th>
+                    <th>Permissible Limit</th>
+                  </tr>
+                
+                  <tr>
+                    <th colspan="1">100</th>
+                    <th>75</th>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_100x75_int_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_100x75_memtry_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_100x75_fnl_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_100x75_recov_Obs}}</td>
+                    <td rowspan="4">7.5%</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_100x75_fnl_val}}</td>
+                    <td rowspan="8">1 Sec to recover to 0.5% of the final steady state value</td>
+                  </tr>
+                
+                  <tr>
+                    <th colspan="1">75</th>
+                    <th>50</th>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_75x50_int_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_75x50_memtry_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_75x50_fnl_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_75x50_varn_Obs}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_75x50_recov_Obs}}</td>
+                  </tr>
+                  
+                  <tr>
+                    <th colspan="1">50</th>
+                    <th>25</th>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_50x25_int_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_50x25_memtry_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_50x25_fnl_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_50x25_varn_Obs}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_50x25_recov_Obs}}</td>
+                  </tr>
+                
+                  <tr>
+                    <th colspan="1">25</th>
+                    <th>0</th>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_25x0_int_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_25x0_memtry_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_25x0_fnl_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_25x0_varn_Obs}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_25x0_recov_Obs}}</td>
+                  </tr>
+                 
+                  <tr>
+                    <th colspan="2">0+M</th>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_0M_int_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_0M_memtry_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_0M_fnl_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_0M_varn_Obs}}</td>
+                    <td rowspan="4">15%</td>
+                  </tr>
+                 
+                  <tr>
+                    <th colspan="2">25+M</th>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_25M_int_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_25M_memtry_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_25M_fnl_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_25M_varn_Obs}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_25M_recov_Obs}}</td>
+                  </tr>
+                 
+                  <tr>
+                  
+                    <th colspan="2">50+M</th>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_50M_int_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_50M_memtry_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_50M_fnl_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_50M_varn_Obs}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_50M_recov_Obs}}</td>
+                  </tr>
+                  
+                  <tr>
+                    <th colspan="2">94+M</th>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_94M_int_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_94M_memtry_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_94M_fnl_val}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_94M_varn_Obs}}</td>
+                    <td style="font-size:14px; color: #222;">{{users.vtrt_94M_recov_Obs}}</td>
+                  </tr>
+                  
+                </table>
+                <div class="note-card">
+                  <p class="mb-0"><strong>Note: </strong> When the frequency converter set is supplying any load up to 94 % of the rated load at 0.8 lagging power factor and a load equal to 50% of KVA at any power factor between zero and 0.4 lagging is suddenly applied, the momentary voltage change must not exceed 15 % of the rated voltage.</p>
+                </div>
+                <h4>14. Waveform Harmonic Content. </h4>
+                <table cellspacing="0" cellpadding="5" border="1" class="table grid-tab" width="100%" style="font-family: Arial, Helvetica, sans-serif;">
+                  <tr>
+                    <td width="7%">(a)</td>
+                    <td width="50%">Maximum total harmonic content of waveform (not to exceed 5 % of the amplitude of fundamental)</td>
+                    <td style="font-size:14px; color: #222;">{{users.wavHorCont_max}}</td>
+                  </tr>
+                </table>
+                <h4>Recommendations. Following recommended:</h4>
+                {%  with "service/approvals.html" as template %}   
+                      {% include template %}
+                      
+                {% endwith %}
+                <div class="clear"></div>
+    </div>
+  </body>
+   
+</html>
