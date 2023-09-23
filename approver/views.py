@@ -130,7 +130,7 @@ class ConfigCRUD(APIView):
                     )
 
                     return Response({"status" :error.context['success_code'], "message":'Config updated successfully'}, status=status.HTTP_200_OK)
-                    
+
                 else:
 
                     models.Config.objects.filter(id=request.data["id"]).update(
@@ -153,6 +153,7 @@ class ConfigList(APIView):
                 "code",
                 "status"
             )
+            .exclude(status=3)
             .order_by("-id")
         )
         return Response(
