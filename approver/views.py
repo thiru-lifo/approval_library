@@ -85,7 +85,7 @@ class ConfigCRUD(APIView):
 
     def post(self,request, pk = None):
 
-        if "name" not in request.data:
+        if "name" not in request.data and request.data["status"] != 3:
             return Response(
                 {
                     "status": error.context["error_code"],
@@ -94,7 +94,7 @@ class ConfigCRUD(APIView):
                 },
                 status=status.HTTP_200_OK,
             )
-        elif "code" not in request.data:
+        elif "code" not in request.data and request.data["status"] != 3:
             return Response(
                 {
                     "status": error.context["error_code"],
@@ -118,23 +118,33 @@ class ConfigCRUD(APIView):
                 )
                 return Response({"status" :error.context['success_code'], "message":'Config created successfully'}, status=status.HTTP_200_OK)
             else:
-                models.Config.objects.filter(id=request.data["id"]).update(
-                    name = request.data["name"],
-                    code = request.data["code"],
-                    desc = request.data["desc"],
-                    modified_by_id = request.user.id,
-                    modified_ip = Common.get_client_ip(request),
-                    status = request.data["status"]
-                )
+                if request.data["status"] != 3:
 
-                return Response({"status" :error.context['success_code'], "message":'Config updated successfully'}, status=status.HTTP_200_OK)
+                    models.Config.objects.filter(id=request.data["id"]).update(
+                        name = request.data["name"],
+                        code = request.data["code"],
+                        desc = request.data["desc"],
+                        modified_by_id = request.user.id,
+                        modified_ip = Common.get_client_ip(request),
+                        status = request.data["status"]
+                    )
+
+                    return Response({"status" :error.context['success_code'], "message":'Config updated successfully'}, status=status.HTTP_200_OK)
+                    
+                else:
+
+                    models.Config.objects.filter(id=request.data["id"]).update(
+                        status = request.data["status"]
+                    )
+
+                    return Response({"status" :error.context['success_code'], "message":'Config deleted successfully'}, status=status.HTTP_200_OK)
 
 
 
 class ConfigList(APIView):
     authentication_classes = [] #disables authentication
     permission_classes = [] #disables permission
-    
+
     def get(self, request, pk=None):
         config = (
             models.Config.objects.values(
