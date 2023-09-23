@@ -128,3 +128,24 @@ class ConfigCRUD(APIView):
                 )
 
                 return Response({"status" :error.context['success_code'], "message":'Config updated successfully'}, status=status.HTTP_200_OK)
+
+
+
+class ConfigList(APIView):
+    authentication_classes = [] #disables authentication
+    permission_classes = [] #disables permission
+    
+    def get(self, request, pk=None):
+        config = (
+            models.Config.objects.values(
+                "id",
+                "name",
+                "code",
+                "status"
+            )
+            .order_by("-id")
+        )
+        return Response(
+            {"status": error.context["success_code"], "data": config},
+            status=status.HTTP_200_OK,
+        )
