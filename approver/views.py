@@ -106,8 +106,8 @@ class ConfigCRUD(APIView):
         else:
 
             #print(request.data,"adad")
-            if request.data["id"]=="":
-
+            if request.data["id"]==None:
+                #print(request.data['name'],"adad2222")
                 models.Config.objects.create(
                     name = request.data["name"],
                     code = request.data["code"],
