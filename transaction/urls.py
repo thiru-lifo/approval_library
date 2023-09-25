@@ -3,14 +3,15 @@ from . import views
 
 urlpatterns = [
     path("trials", views.TrialsList.as_view(), name="Trial Units List"),
-    path("intiate-to-rec", views.IntiateToRec.as_view(), name="Intiate To Rec"),
-    path("trials/approval", views.TrialsApproval.as_view(), name="Trial Approval"),
-    path(
-        "trial-approvals",
-        views.TrialsApprovalList.as_view(),
-        name="Trial Approval List",
-    ),
-    path("approved_history", views.ApprovalHistory.as_view()),
+    path("trials/crud", views.TrialsCRUD.as_view(), name="Trial Units CRUD"),
+    # path("intiate-to-rec", views.IntiateToRec.as_view(), name="Intiate To Rec"),
+    # path("trials/approval", views.TrialsApproval.as_view(), name="Trial Approval"),
+    # path(
+    #     "trial-approvals",
+    #     views.TrialsApprovalList.as_view(),
+    #     name="Trial Approval List",
+    # ),
+    # path("approved_history", views.ApprovalHistory.as_view()),
     # path(
     #     "hs-converter", views.HSConverterList.as_view(), name="Trial HSConverter List"
     # ),
