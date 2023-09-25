@@ -160,3 +160,95 @@ class ConfigList(APIView):
             {"status": error.context["success_code"], "data": config},
             status=status.HTTP_200_OK,
         )
+
+
+class ApprovedConfigCRUD(APIView):
+    authentication_classes = [] #disables authentication
+    permission_classes = [] #disables permission
+
+    def post(self,request, pk = None):
+
+        if "config_id" not in request.data and request.data["status"] != 3:
+            return Response(
+                {
+                    "status": error.context["error_code"],
+                    "message": "Config Id"
+                    + language.context[language.defaultLang]["missing"],
+                },
+                status=status.HTTP_200_OK,
+            )
+        elif "role_id" not in request.data and request.data["status"] != 3:
+            return Response(
+                {
+                    "status": error.context["error_code"],
+                    "message": "Role Id"
+                    + language.context[language.defaultLang]["missing"],
+                },
+                status=status.HTTP_200_OK,
+            )
+        if "user_id" not in request.data and request.data["status"] != 3:
+            return Response(
+                {
+                    "status": error.context["error_code"],
+                    "message": "User Id"
+                    + language.context[language.defaultLang]["missing"],
+                },
+                status=status.HTTP_200_OK,
+            )
+        elif "type" not in request.data and request.data["status"] != 3:
+            return Response(
+                {
+                    "status": error.context["error_code"],
+                    "message": "Type"
+                    + language.context[language.defaultLang]["missing"],
+                },
+                status=status.HTTP_200_OK,
+            )
+        elif "level" not in request.data and request.data["status"] != 3:
+            return Response(
+                {
+                    "status": error.context["error_code"],
+                    "message": "Level"
+                    + language.context[language.defaultLang]["missing"],
+                },
+                status=status.HTTP_200_OK,
+            )
+        else:
+
+            #print(request.data,"adad")
+            if request.data["id"]==None:
+                #print(request.data['name'],"adad2222")
+                models.Config.objects.create(
+                    config_id = request.data["config_id"],
+                    role_id = request.data["role_id"],
+                    user_id = request.data["user_id"],
+                    type = request.data["type"],
+                    level = request.data["level"],
+                    created_by_id = request.user.id,
+                    created_ip = Common.get_client_ip(request),
+                    status = request.data["status"]
+                )
+                return Response({"status" :error.context['success_code'], "message":'Approved config created successfully'}, status=status.HTTP_200_OK)
+            else:
+                if request.data["status"] != 3:
+
+                    models.Config.objects.filter(id=request.data["id"]).update(
+                        config_id = request.data["config_id"],
+                        role_id = request.data["role_id"],
+                        user_id = request.data["user_id"],
+                        type = request.data["type"],
+                        level = request.data["level"],
+                        modified_by_id = request.user.id,
+                        modified_ip = Common.get_client_ip(request),
+                        status = request.data["status"]
+                    )
+
+                    return Response({"status" :error.context['success_code'], "message":'Approved config updated successfully'}, status=status.HTTP_200_OK)
+
+                else:
+
+                    models.Config.objects.filter(id=request.data["id"]).update(
+                        status = request.data["status"]
+                    )
+
+                    return Response({"status" :error.context['success_code'], "message":'Approved config deleted successfully'}, status=status.HTTP_200_OK)
