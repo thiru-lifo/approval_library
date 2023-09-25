@@ -56,8 +56,8 @@ class ApprovalStatus(models.Model):
 	notes = models.TextField(blank=True, null=True)
 	status = models.SmallIntegerField(choices=((1,'accept'),(2,'reject')))
 	final_approval = models.SmallIntegerField(null=True, blank=True)
-	updated_on = models.DateTimeField(auto_now_add=True)
-	updated_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="approval_status_updated_by")
+	#updated_on = models.DateTimeField(auto_now_add=True)
+	#updated_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="approval_status_updated_by")
 	
 	created_on = models.DateTimeField(auto_now_add=True)
 	created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="approval_status_created_by")
@@ -82,8 +82,8 @@ class ApprovalHistory(models.Model):
 	notes = models.TextField(blank=True, null=True)
 	status = models.SmallIntegerField(choices=((1,'accept'),(2,'reject')))
 	#final_approval = models.SmallIntegerField(null=True, blank=True)
-	updated_on = models.DateTimeField(auto_now_add=True)
-	updated_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="approval_history_updated_by")
+	#updated_on = models.DateTimeField(auto_now_add=True)
+	#updated_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="approval_history_updated_by")
 	
 	created_on = models.DateTimeField(auto_now_add=True)
 	created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name="approval_history_created_by")

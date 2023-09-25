@@ -330,23 +330,52 @@ class ApprovalStatus(APIView):
             role_id = request.data["role_id"]
             status = request.data["status"] # Accept / Rejected
             notes = request.data["notes"]
-            final_approval = request.data["final_approval"]
 
             # Check with approved config.
-            res = models.ApprovedConfig.objects.values('id','config_id').filter(config_id = config_id).first()
+            ac_res = models.ApprovedConfig.objects.values('id','config_id','role_id','user_id','type','level').filter(
+                config_id = config_id, 
+                role_id = role_id, 
+                user_id = user_id
+                ).first()
 
-            if res:
+            if ac_res:
 
-                models.ApprovalStatus.objects.create(
-                    transaction_id = request.data["trans_id"],
-                    approved_config = request.data["config_id"],
-                    notes = request.data["notes"],
-                    status = request.data["status"],
-                    final_approval = final_approval if 'final_approval' in request.data else None,
-                    created_by_id = request.user.id,
-                    created_ip = Common.get_client_ip(request),
+                ac_count = models.ApprovedConfig.objects.filter(config_id = config_id).count()
+                as_count = models.ApprovalStatus.objects.filter(transaction_id = trans_id, approved_config = config_id).count()
+
+                if as_count>0:
+
+                    update = models.ApprovalStatus.objects.filter(transaction_id = trans_id, approved_config = config_id).update(
+                        transaction_id = trans_id,
+                        approved_config = config_id,
+                        notes = notes,
+                        status = status,
+                        final_approval = 1 if ac_count = ac_res['level'] else None,
+                        modified_by_id = request.user.id,
+                        modified_ip = Common.get_client_ip(request)
+                    )
+
+                else:
+
+                    ins = models.ApprovalStatus.objects.create(
+                        transaction_id = trans_id,
+                        approved_config = config_id,
+                        notes = notes,
+                        status = status,
+                        final_approval = 1 if ac_count = ac_res['level'] else None,
+                        modified_by_id = request.user.id,
+                        modified_ip = Common.get_client_ip(request)
+                    )
+
+                log = models.ApprovalHistory.objects.create(
+                    transaction_id = trans_id,
+                    approved_config = config_id,
+                    notes = notes,
+                    status = status,
+                    modified_by_id = request.user.id,
+                    modified_ip = Common.get_client_ip(request)
                 )
 
                 return Response({"status" :error.context['success_code'], "message":'Approval status created successfully'}, status=status.HTTP_200_OK)
             else:
-                pass               
+                pass
