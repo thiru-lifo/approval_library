@@ -277,7 +277,16 @@ class ApprovalStatus(APIView):
 
     def post(self,request, pk = None):
 
-        if "config_id" not in request.data and request.data["status"] != 3:
+        if "trans_id" not in request.data:
+            return Response(
+                {
+                    "status": error.context["error_code"],
+                    "message": "Transaction Id"
+                    + language.context[language.defaultLang]["missing"],
+                },
+                status=status.HTTP_200_OK,
+            )
+        elif "config_id" not in request.data:
             return Response(
                 {
                     "status": error.context["error_code"],
@@ -286,7 +295,7 @@ class ApprovalStatus(APIView):
                 },
                 status=status.HTTP_200_OK,
             )
-        elif "role_id" not in request.data and request.data["status"] != 3:
+        elif "role_id" not in request.data:
             return Response(
                 {
                     "status": error.context["error_code"],
@@ -295,7 +304,7 @@ class ApprovalStatus(APIView):
                 },
                 status=status.HTTP_200_OK,
             )
-        if "user_id" not in request.data and request.data["status"] != 3:
+        if "user_id" not in request.data:
             return Response(
                 {
                     "status": error.context["error_code"],
@@ -304,60 +313,40 @@ class ApprovalStatus(APIView):
                 },
                 status=status.HTTP_200_OK,
             )
-        elif "type" not in request.data and request.data["status"] != 3:
+        elif "status" not in request.data:
             return Response(
                 {
                     "status": error.context["error_code"],
-                    "message": "Type"
-                    + language.context[language.defaultLang]["missing"],
-                },
-                status=status.HTTP_200_OK,
-            )
-        elif "level" not in request.data and request.data["status"] != 3:
-            return Response(
-                {
-                    "status": error.context["error_code"],
-                    "message": "Level"
+                    "message": "Status"
                     + language.context[language.defaultLang]["missing"],
                 },
                 status=status.HTTP_200_OK,
             )
         else:
 
-            #print(request.data,"adad")
-            if request.data["id"]==None:
-                #print(request.data['name'],"adad2222")
-                models.Config.objects.create(
-                    config_id = request.data["config_id"],
-                    role_id = request.data["role_id"],
-                    user_id = request.data["user_id"],
-                    type = request.data["type"],
-                    level = request.data["level"],
+            trans_id = request.data["trans_id"]
+            config_id = request.data["config_id"]
+            user_id = request.data["user_id"]
+            role_id = request.data["role_id"]
+            status = request.data["status"] # Accept / Rejected
+            notes = request.data["notes"]
+            final_approval = request.data["final_approval"]
+
+            # Check with approved config.
+            res = models.ApprovedConfig.objects.values('id','config_id').filter(config_id = config_id).first()
+
+            if res:
+
+                models.ApprovalStatus.objects.create(
+                    transaction_id = request.data["trans_id"],
+                    approved_config = request.data["config_id"],
+                    notes = request.data["notes"],
+                    status = request.data["status"],
+                    final_approval = final_approval if 'final_approval' in request.data else None,
                     created_by_id = request.user.id,
                     created_ip = Common.get_client_ip(request),
-                    status = request.data["status"]
                 )
-                return Response({"status" :error.context['success_code'], "message":'Approved config created successfully'}, status=status.HTTP_200_OK)
+
+                return Response({"status" :error.context['success_code'], "message":'Approval status created successfully'}, status=status.HTTP_200_OK)
             else:
-                if request.data["status"] != 3:
-
-                    models.Config.objects.filter(id=request.data["id"]).update(
-                        config_id = request.data["config_id"],
-                        role_id = request.data["role_id"],
-                        user_id = request.data["user_id"],
-                        type = request.data["type"],
-                        level = request.data["level"],
-                        modified_by_id = request.user.id,
-                        modified_ip = Common.get_client_ip(request),
-                        status = request.data["status"]
-                    )
-
-                    return Response({"status" :error.context['success_code'], "message":'Approved config updated successfully'}, status=status.HTTP_200_OK)
-
-                else:
-
-                    models.Config.objects.filter(id=request.data["id"]).update(
-                        status = request.data["status"]
-                    )
-
-                    return Response({"status" :error.context['success_code'], "message":'Approved config deleted successfully'}, status=status.HTTP_200_OK)                    
+                pass               
