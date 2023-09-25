@@ -350,7 +350,7 @@ class ApprovalStatus(APIView):
                         approved_config = config_id,
                         notes = notes,
                         status = status,
-                        final_approval = 1 if ac_count = ac_res['level'] else None,
+                        final_approval = 1 if ac_count == ac_res['level'] else None,
                         modified_by_id = request.user.id,
                         modified_ip = Common.get_client_ip(request)
                     )
@@ -362,7 +362,7 @@ class ApprovalStatus(APIView):
                         approved_config = config_id,
                         notes = notes,
                         status = status,
-                        final_approval = 1 if ac_count = ac_res['level'] else None,
+                        final_approval = 1 if ac_count == ac_res['level'] else None,
                         modified_by_id = request.user.id,
                         modified_ip = Common.get_client_ip(request)
                     )
