@@ -246,6 +246,27 @@ class ApprovedConfigCRUD(APIView):
 
                     return Response({"status" :error.context['success_code'], "message":'Approved config deleted successfully'}, status=status.HTTP_200_OK)
 
+class ApprovedConfigList(APIView):
+
+    def get(self, request, pk=None):
+        res = (
+            models.ApprovedConfig.objects.values(
+                "id",
+                "config_id",
+                "role_id__name",
+                "user_id__first_name",
+                "user_id__last_name",
+                "type",
+                "level",
+                "status"
+            )
+            .exclude(status=3)
+            .order_by("-id")
+        )
+        return Response(
+            {"status": error.context["success_code"], "data": res},
+            status=status.HTTP_200_OK,
+        )
 
 class ApprovalStatus(APIView):
     authentication_classes = [] #disables authentication
