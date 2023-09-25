@@ -253,7 +253,10 @@ class ApprovedConfigList(APIView):
             models.ApprovedConfig.objects.values(
                 "id",
                 "config_id",
+                "config_id__name",
+                "role_id",
                 "role_id__name",
+                "user_id",
                 "user_id__first_name",
                 "user_id__last_name",
                 "type",
