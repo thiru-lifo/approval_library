@@ -1,3 +1,5 @@
+from functools import reduce
+import operator
 from telnetlib import STATUS
 from django.shortcuts import render
 from access import models
@@ -49,8 +51,7 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 import os
 import csv
-
-
+from django.db.models import Q
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseServerError
 from django.shortcuts import render
