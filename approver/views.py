@@ -162,7 +162,7 @@ class ConfigCRUD(APIView):
 class ConfigList(APIView):
     def get(self, request, pk=None):
         config = (
-            models.Config.objects.values("id", "name", "code", "status")
+            models.Config.objects.values("id", "name", "code","desc","status")
             .exclude(status=3)
             .order_by("-id")
         )
