@@ -700,41 +700,6 @@ class usersCRUD(APIView):
                             process_id=request.data["process"],
                         ).save()
 
-                if request.data["data_access"]:
-                    DataAccess.objects.filter(user_id=request.data["id"]).delete()
-                    for access in request.data["data_access"]:
-                        if "trial_unit_id" in access and "satellite_unit_id" in access:
-                            dataAccessSerializer = DataAccessSerializerCRUD(
-                                data={
-                                    "user": request.data["id"],
-                                    "trial_unit": access["trial_unit_id"],
-                                    "satellite_unit": access["satellite_unit_id"],
-                                }
-                            )
-                            if dataAccessSerializer.is_valid():
-                                dataAccessSerializer.save()
-                                # print("gd", dataAccessSerializer)
-                                data_access_id = dataAccessSerializer.data["id"]
-                                if "ship_id" in access or "ship_id" == "" in access:
-                                    for ship in access["ship_id"]:
-                                        DataAccessShip.objects.create(
-                                            data_access_id=data_access_id, ship_id=ship
-                                        )
-                                #     dataAccessShipSerializer=DataAccessShipSerializer(data={"data_access":data_access_id,"ship":ship})
-                                #     if dataAccessShipSerializer.is_valid():
-                                #         dataAccessShipSerializer.save()
-                                #     else:
-                                #         return Response({"status" :error.context['error_code'],"message":error.serializerError(dataAccessShipSerializer)}, status = status.HTTP_200_OK)
-                            else:
-                                return Response(
-                                    {
-                                        "status": error.context["error_code"],
-                                        "message": error.serializerError(
-                                            dataAccessSerializer
-                                        ),
-                                    },
-                                    status=status.HTTP_200_OK,
-                                )
 
                 return Response(
                     {
@@ -765,60 +730,6 @@ class usersCRUD(APIView):
                                 user_role_id=user_role,
                                 process_id=request.data["process"],
                             ).save()
-
-                    # print("gjj", request.data["data_access"])
-                    if request.data["data_access"]:
-                        DataAccess.objects.filter(
-                            user_id=saveserialize.data["id"]
-                        ).delete()
-                        for access in request.data["data_access"]:
-                            # print("gjj", access)
-                            if (
-                                "trial_unit_id" in access
-                                and "satellite_unit_id" in access
-                            ):
-                                dataAccessSerializer = DataAccessSerializerCRUD(
-                                    data={
-                                        "user": saveserialize.data["id"],
-                                        "trial_unit": access["trial_unit_id"],
-                                        "satellite_unit": access["satellite_unit_id"],
-                                    }
-                                )
-                                if dataAccessSerializer.is_valid():
-                                    dataAccessSerializer.save()
-                                    # DataAccess
-                                    print("d", dataAccessSerializer.data["id"])
-                                    data_access_id = dataAccessSerializer.data["id"]
-                                    if access["ship_id"] == None:
-                                        # print("gsdf")
-                                        DataAccessShip.objects.create(
-                                            data_access_id=data_access_id, ship_id=""
-                                        )
-                                    elif access["ship_id"] != "[]":
-                                        # print("uiou")
-                                        for ship in access["ship_id"]:
-                                            DataAccessShip.objects.create(
-                                                data_access_id=data_access_id,
-                                                ship_id=ship,
-                                            )
-                                            # #print('ship',ship)
-                                            # dataAccessShipSerializer=DataAccessShipSerializer(data={"data_access":data_access_id,"ship":ship})
-                                            # if dataAccessShipSerializer.is_valid():
-                                            #     #print(request.data)
-                                            #     dataAccessShipSerializer.save()
-                                            # else:
-                                            #     return Response({"status" :error.context['error_code'],"message":error.serializerError(dataAccessShipSerializer)}, status = status.HTTP_200_OK)
-                                else:
-                                    return Response(
-                                        {
-                                            "status": error.context["error_code"],
-                                            "message": error.serializerError(
-                                                dataAccessSerializer
-                                            ),
-                                        },
-                                        status=status.HTTP_200_OK,
-                                    )
-
                     return Response(
                         {
                             "status": error.context["success_code"],
@@ -828,8 +739,8 @@ class usersCRUD(APIView):
                         },
                         status=status.HTTP_200_OK,
                     )
-                else:
-                    return Response(
+          
+            return Response(
                         {
                             "status": error.context["error_code"],
                             "message": error.serializerError(saveserialize),
