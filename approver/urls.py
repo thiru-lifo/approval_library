@@ -19,5 +19,5 @@ urlpatterns = [
         views.GetApprovedDetails.as_view(),
         name="Get Approved Config Details",
     ),
-    # path("approval_status", views.ApprovalStatus.as_view(), name="Approved Status"),
+    path("approval_status", views.ApprovalStatus.as_view(), name="Approved Status"),
 ]
