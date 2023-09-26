@@ -274,24 +274,6 @@ class authenticationView(APIView):
             user_role_id = request.data["user_role_id"]
             user_id = request.data["user_id"]
             data = {}
-            # biometric =True
-            q = DataAccess.objects.filter(user__id=user_id)
-            Trials_access = []
-            Unit_name = request.data.get("Unit_name", "")
-            for i in q:
-                if i.trial_unit:
-                    Trials_access.append(i.trial_unit.name)
-                # user_role_id !=3 and   ----this is for initiator
-                # and user_role_id !=8   ----this is for viewers
-            if user_role_id != 1:
-                if Unit_name not in Trials_access:
-                    return Response(
-                        {
-                            "status": 2,
-                            "message": "User Does not have Permission",
-                            # status:status.HTTP_401_UNAUTHORIZED,
-                        }
-                    )
             biometricVal = (
                 Configurationtable.objects.values("id", "value")
                 .filter(code="BM")
