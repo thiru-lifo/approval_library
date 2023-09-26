@@ -271,6 +271,58 @@ class ApprovedConfigList(APIView):
             status=status.HTTP_200_OK,
         )
 
+# Check Approved Config Id.
+class GetApprovedDetails(APIView):
+
+    authentication_classes = [] #disables authentication
+    permission_classes = [] #disables permission
+    def get(self,request, pk = None):
+
+        if "role_id" not in request.GET:
+            return Response(
+                {
+                    "status": error.context["error_code"],
+                    "message": "Role Id"
+                    + language.context[language.defaultLang]["missing"],
+                },
+                status=status.HTTP_200_OK,
+            )
+        elif "user_id" not in request.GET:
+            return Response(
+                {
+                    "status": error.context["error_code"],
+                    "message": "User Id"
+                    + language.context[language.defaultLang]["missing"],
+                },
+                status=status.HTTP_200_OK,
+            )
+
+        else:
+
+            user_id = request.GET["user_id"]
+            role_id = request.GET["role_id"]
+
+            # Check with approved config.
+            ac_res = models.ApprovedConfig.objects.values('id','role_id','user_id','type','level').filter(
+                role_id = role_id, 
+                user_id = user_id
+                ).first()
+
+            if ac_res:
+
+                return Response({
+                    "status": error.context['success_code'], 
+                    "data": ac_res,
+                    "message": 'Data found'}, 
+                    status=status.HTTP_200_OK)
+
+            else:
+                return Response({
+                    "status": error.context['success_code'],
+                    "message": 'No data found'}, 
+                    status=status.HTTP_200_OK)
+
+
 class ApprovalStatus(APIView):
     authentication_classes = [] #disables authentication
     permission_classes = [] #disables permission
@@ -379,54 +431,3 @@ class ApprovalStatus(APIView):
                 return Response({"status" :error.context['success_code'], "message":'Approval status created successfully'}, status=status.HTTP_200_OK)
             else:
                 pass
-
-
-# Check Approved Config Id.
-
-class GetApprovedDetails(APIView):
-
-    def get(self,request, pk = None):
-
-        if "role_id" not in request.GET:
-            return Response(
-                {
-                    "status": error.context["error_code"],
-                    "message": "Role Id"
-                    + language.context[language.defaultLang]["missing"],
-                },
-                status=status.HTTP_200_OK,
-            )
-        elif "user_id" not in request.GET:
-            return Response(
-                {
-                    "status": error.context["error_code"],
-                    "message": "User Id"
-                    + language.context[language.defaultLang]["missing"],
-                },
-                status=status.HTTP_200_OK,
-            )
-
-        else:
-
-            user_id = request.GET["user_id"]
-            role_id = request.GET["role_id"]
-
-            # Check with approved config.
-            ac_res = models.ApprovedConfig.objects.values('id','config_id','role_id','user_id','type','level').filter(
-                role_id = role_id, 
-                user_id = user_id
-                ).first()
-
-            if ac_res:
-
-                return Response({
-                    "status": error.context['success_code'], 
-                    "data": ac_res,
-                    "message": 'Data found'}, 
-                    status=status.HTTP_200_OK)
-
-            else:
-                return Response({
-                    "status": error.context['success_code'],
-                    "message": 'No data found'}, 
-                    status=status.HTTP_200_OK)

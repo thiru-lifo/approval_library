@@ -7,5 +7,5 @@ urlpatterns = [
     path("approved_config", views.ApprovedConfigCRUD.as_view(), name="Approved Config CURD"),
     path("approved_config_list", views.ApprovedConfigList.as_view(), name="Approved Config List"),
     path("get_approved_config", views.GetApprovedDetails.as_view(), name="Get Approved Config Details"),
-    #path("approval_status", views.ApprovedConfigCRUD.as_view(), name="Approved Status"),
+    path("approval_status", views.ApprovalStatus.as_view(), name="Approved Status"),
 ]
