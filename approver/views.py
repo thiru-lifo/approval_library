@@ -384,8 +384,6 @@ class ApprovalStatus(APIView):
 # Check Approved Config Id.
 
 class GetApprovedDetails(APIView):
-    authentication_classes = [] #disables authentication
-    permission_classes = [] #disables permission
 
     def get(self,request, pk = None):
 
