@@ -162,7 +162,7 @@ class ConfigCRUD(APIView):
 class ConfigList(APIView):
     def get(self, request, pk=None):
         config = (
-            models.Config.objects.values("id", "name", "code","desc","status")
+            models.Config.objects.values("id", "name", "code", "desc", "status")
             .exclude(status=3)
             .order_by("-id")
         )
@@ -299,13 +299,13 @@ class ApprovedConfigList(APIView):
             status=status.HTTP_200_OK,
         )
 
+
 # Check Approved Config Id.
 class GetApprovedDetails(APIView):
+    authentication_classes = []  # disables authentication
+    permission_classes = []  # disables permission
 
-    authentication_classes = [] #disables authentication
-    permission_classes = [] #disables permission
-    def get(self,request, pk = None):
-
+    def get(self, request, pk=None):
         if "role_id" not in request.GET:
             return Response(
                 {
@@ -326,33 +326,171 @@ class GetApprovedDetails(APIView):
             )
 
         else:
-
             user_id = request.GET["user_id"]
             role_id = request.GET["role_id"]
 
             # Check with approved config.
-            ac_res = models.ApprovedConfig.objects.values('id','role_id','user_id','type','level').filter(
-                role_id = role_id, 
-                user_id = user_id
-                ).first()
+            ac_res = (
+                models.ApprovedConfig.objects.values(
+                    "id", "role_id", "user_id", "type", "level"
+                )
+                .filter(role_id=role_id, user_id=user_id)
+                .first()
+            )
 
             if ac_res:
-
-                return Response({
-                    "status": error.context['success_code'], 
-                    "data": ac_res,
-                    "message": 'Data found'}, 
-                    status=status.HTTP_200_OK)
+                return Response(
+                    {
+                        "status": error.context["success_code"],
+                        "data": ac_res,
+                        "message": "Data found",
+                    },
+                    status=status.HTTP_200_OK,
+                )
 
             else:
-                return Response({
-                    "status": error.context['success_code'],
-                    "message": 'No data found'}, 
-                    status=status.HTTP_200_OK)
+                return Response(
+                    {
+                        "status": error.context["success_code"],
+                        "message": "No data found",
+                    },
+                    status=status.HTTP_200_OK,
+                )
+
+
+class ApprovalStatusList(APIView):
+    def get(self, request, pk=None):
+        filter_values = dict(request.GET.items())
+        search_string = order_type = order_column = limit_start = limit_end = ""
+        normal_values = dict()
+        array_values = dict()
+        if filter_values:
+            for key, values in filter_values.items():
+                if values.find("[") != -1 and values.find("]") != -1:
+                    res = values.strip("][").split(",")
+                    array_values[key] = res
+                else:
+                    normal_values[key] = values
+
+            strings = ["name", "description"]
+            search_string = dict(
+                (k, normal_values[k]) for k in strings if k in normal_values
+            )
+            order_column = request.GET.get("order_column")
+            order_type = request.GET.get("order_type")
+            limit_start = request.GET.get("limit_start")
+            limit_end = request.GET.get("limit_end")
+
+            if order_column is not None:
+                normal_values.pop("order_column")
+            if order_type is not None:
+                normal_values.pop("order_type")
+            if limit_start is not None:
+                normal_values.pop("limit_start")
+            if limit_end is not None:
+                normal_values.pop("limit_end")
+
+            for key in strings:
+                if key in normal_values:
+                    normal_values.pop(key)
+
+            if search_string:
+                filter_string = None
+                for field in search_string:
+                    q = Q(**{"%s__contains" % field: search_string[field]})
+                    if filter_string:
+                        filter_string = filter_string & q
+                    else:
+                        filter_string = q
+        try:
+            if pk:
+                list = (
+                    models.ApprovalStatus.objects.filter(pk=pk)
+                    .exclude(status="3")
+                    .get()
+                )
+                return Response(
+                    {
+                        "status": error.context["success_code"],
+                        "data": list,
+                    },
+                    status=status.HTTP_200_OK,
+                )
+
+        except models.ApprovalStatus.DoesNotExist:
+            return Response(
+                {
+                    "status": error.context["error_code"],
+                    "message": "Section"
+                    + language.context[language.defaultLang]["dataNotFound"],
+                },
+                status=status.HTTP_200_OK,
+            )
+        lists = models.ApprovalStatus.objects.values(
+            "id",
+            "transaction_id",
+            "notes",
+            "created_on",
+            "final_approval",
+            "approved_config_id",
+            "created_by_id",
+            "modified_by_id",
+            "status",
+        ).exclude(status=3)
+        if normal_values:
+            lists = lists.filter(
+                reduce(
+                    operator.and_,
+                    (Q(**d) for d in [dict([i]) for i in normal_values.items()]),
+                )
+            )
+        if array_values:
+            for key, values in array_values.items():
+                queries = [Q(**{"%s__contains" % key: value}) for value in values]
+                query = queries.pop()
+                for item in queries:
+                    query |= item
+                lists = lists.filter(query)
+        if search_string:
+            lists = lists.filter(filter_string)
+
+        if order_type is None:
+            if order_column:
+                lists = lists.order_by(order_column)
+
+        elif order_type in "asc":
+            if order_column:
+                lists = lists.order_by(order_column)
+            else:
+                lists = lists.order_by("id")
+
+        elif order_type in "desc":
+            if order_column:
+                order_column = "-" + str(order_column)
+                lists = lists.order_by(order_column)
+            else:
+                lists = lists.order_by("-id")
+
+        if limit_start and limit_end:
+            lists = lists[int(limit_start) : int(limit_end)]
+
+        elif limit_start:
+            lists = lists[int(limit_start) :]
+
+        elif limit_end:
+            lists = lists[0 : int(limit_end)]
+        return Response(
+            {
+                "status": error.context["success_code"],
+                "data": lists,
+            },
+            status=status.HTTP_200_OK,
+        )
+
 
 class ApprovalStatus(APIView):
-    authentication_classes = [] #disables authentication
-    permission_classes = [] #disables permission
+    authentication_classes = []  # disables authentication
+    permission_classes = []  # disables permission
 
     def post(self, request, pk=None):
         if "trans_id" not in request.data:
@@ -364,15 +502,6 @@ class ApprovalStatus(APIView):
                 },
                 status=status.HTTP_200_OK,
             )
-        # elif "config_id" not in request.data:
-        #     return Response(
-        #         {
-        #             "status": error.context["error_code"],
-        #             "message": "Config Id"
-        #             + language.context[language.defaultLang]["missing"],
-        #         },
-        #         status=status.HTTP_200_OK,
-        #     )
         elif "role_id" not in request.data:
             return Response(
                 {
@@ -385,7 +514,7 @@ class ApprovalStatus(APIView):
         if "user_id" not in request.data:
             return Response(
                 {
-                    "status": error .context["error_code"],
+                    "status": error.context["error_code"],
                     "message": "User Id"
                     + language.context[language.defaultLang]["missing"],
                 },
@@ -402,74 +531,107 @@ class ApprovalStatus(APIView):
             )
         else:
             trans_id = request.data["trans_id"]
-            #config_id = request.data["config_id"]
+            # config_id = request.data["config_id"]
             user_id = request.data["user_id"]
             role_id = request.data["role_id"]
             status = request.data["status"]  # Accept / Rejected
             notes = request.data["notes"]
-
-            #print(status,"status")
             # Check with approved config.
-            ac_res = models.ApprovedConfig.objects.values('id','config_id','role_id','user_id','type','level').filter(
-                role_id = role_id, 
-                user_id = user_id
-                ).first()
-
-            #print(ac_res,"GGGGG", ac_res['type'], request.user.id)
-
+            ac_res = (
+                models.ApprovedConfig.objects.values(
+                    "id", "config_id", "role_id", "user_id", "type", "level"
+                )
+                .filter(role_id=role_id, user_id=user_id)
+                .first()
+            )
             if ac_res:
-                # ac_count = models.ApprovedConfig.objects.filter(
-                #     config_id=config_id
-                # ).count()
-                # as_count = models.ApprovalStatus.objects.filter(
-                #     transaction_id=trans_id, approved_config=config_id
-                # ).count()
-
-                if ac_res['type']==2:
-                    ac_count = models.ApprovedConfig.objects.filter(type = 2).count()
+                if ac_res["type"] == 2:
+                    ac_count = models.ApprovedConfig.objects.filter(type=2).count()
                 else:
                     ac_count = None
 
-                as_count = models.ApprovalStatus.objects.filter(transaction_id = trans_id).count()
+                as_count = models.ApprovalStatus.objects.filter(
+                    transaction_id=trans_id
+                ).count()
 
-                if as_count>0:
-
-                    update = models.ApprovalStatus.objects.filter(transaction_id = trans_id).update(
-                        transaction_id = trans_id,
-                        approved_config_id = ac_res['id'],
-                        notes = notes,
-                        status = status,
-                        final_approval = 1 if ac_count==ac_res['level'] and status=='1' else None,
-                        #modified_by_id = request.user.id,
-                        modified_by_id = user_id,
-                        modified_ip = Common.get_client_ip(request)
+                if as_count > 0:
+                    update = models.ApprovalStatus.objects.filter(
+                        transaction_id=trans_id
+                    ).update(
+                        transaction_id=trans_id,
+                        approved_config_id=ac_res["id"],
+                        notes=notes,
+                        status=status,
+                        final_approval=1
+                        if ac_count == ac_res["level"] and status == "1"
+                        else None,
+                        # modified_by_id = request.user.id,
+                        modified_by_id=user_id,
+                        modified_ip=Common.get_client_ip(request),
                     )
 
                 else:
                     ins = models.ApprovalStatus.objects.create(
-                        transaction_id = trans_id,
-                        approved_config_id = ac_res['id'],
-                        notes = notes,
-                        status = status,
-                        final_approval = 1 if ac_count==ac_res['level'] and status=='1' else None,
-                        #modified_by_id = request.user.id,
-                        modified_by_id = user_id,
-                        modified_ip = Common.get_client_ip(request)
+                        transaction_id=trans_id,
+                        approved_config_id=ac_res["id"],
+                        notes=notes,
+                        status=status,
+                        created_by_id=user_id,
+                        final_approval=1
+                        if ac_count == ac_res["level"] and status == "1"
+                        else None,
+                        # modified_by_id = request.user.id,
+                        modified_by_id=user_id,
+                        modified_ip=Common.get_client_ip(request),
                     )
 
                 log = models.ApprovalHistory.objects.create(
-                    transaction_id = trans_id,
-                    approved_config_id = ac_res['id'],
-                    notes = notes,
-                    status = status,
-                    #modified_by_id = request.user.id,
-                    modified_by_id = user_id,
-                    modified_ip = Common.get_client_ip(request)
+                    transaction_id=trans_id,
+                    approved_config_id=ac_res["id"],
+                    notes=notes,
+                    status=status,
+                    created_by_id=user_id,
+                    modified_by_id=user_id,
+                    modified_ip=Common.get_client_ip(request),
                 )
 
-                #return Response({"status" :error.context['success_code'], "message":'Approval status created successfully'}, status=status.HTTP_200_OK)
-
-                return Response({"status" :error.context['success_code'], "message":'Approved config created successfully'})
+                return Response(
+                    {
+                        "status": error.context["success_code"],
+                        "message": "Approved config created successfully",
+                    }
+                )
 
             else:
-                pass
+                return Response(
+                    {
+                        "status": error.context["success_code"],
+                        "message": "Approval status not created",
+                    }
+                )
+
+
+class ApprovalHistory(APIView):
+    def post(self, request, pk=None):
+        trans_id = request.data["trans_id"]
+        lists = (
+            models.ApprovalHistory.objects.values(
+                "id",
+                "transaction_id",
+                "notes",
+                "created_on",
+                "approved_config_id",
+                "created_by_id",
+                "modified_by_id",
+                "status",
+            )
+            .filter(transaction_id=trans_id)
+            .exclude(status=3)
+        )
+        return Response(
+            {
+                "status": error.context["success_code"],
+                "data": lists,
+            },
+            status=status.HTTP_200_OK,
+        )

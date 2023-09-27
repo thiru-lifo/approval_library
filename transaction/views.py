@@ -72,9 +72,8 @@ from .serializer import (
     # trialApprovalSerializer,
     # TempImportDataSerializer,
 )
-from master.models import (
-    TrialTypes,
-    DataAccess,
+from approver.models import (
+    ApprovalStatus,
 )
 from configuration.models import Approval
 from notification.models import NotificationUser, NotificationUserLog
@@ -158,8 +157,17 @@ class TrialsList(APIView):
             )
 
         # lists = models.Sections.objects.exclude(status="3")
+        subquery = ApprovalStatus.objects.filter(transaction_id=OuterRef("id")).values(
+            "id",
+        )[:1]
+        subquery2 = ApprovalStatus.objects.filter(transaction_id=OuterRef("id")).values(
+            "modified_by_id",
+        )[:1]
         lists = (
-            models.Trials.objects.values(
+            models.Trials.objects.annotate(
+                approval_config_id=Subquery(subquery), approvar_id=Subquery(subquery2)
+            )
+            .values(
                 "id",
                 "name",
                 "status",
@@ -167,10 +175,12 @@ class TrialsList(APIView):
                 "created_by__id",
                 "created_by__first_name",
                 "created_by__last_name",
+                "approval_config_id",
+                "approvar_id",
             )
             .exclude(status=3)
-            .order_by("-id")
         )
+
         if normal_values:
             lists = lists.filter(
                 reduce(

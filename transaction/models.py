@@ -23,10 +23,10 @@ class Trials(models.Model):
     status = models.SmallIntegerField(
         choices=((1, "Active"), (2, "Inactive"), (3, "Delete")), null=True
     )
-    created_on = models.DateTimeField(default=datetime.now, blank=True)
+    created_on = models.DateTimeField(auto_now_add=True, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_ip = models.GenericIPAddressField(null=True)
-    modified_on = models.DateTimeField(default=datetime.now, blank=True, null=True)
+    modified_on = models.DateTimeField(blank=True, null=True)
     modified_by = models.CharField(max_length=100, blank=True, null=True)
     modified_ip = models.GenericIPAddressField(blank=True, null=True)
 
